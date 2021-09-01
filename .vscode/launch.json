@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch HttpServer",
+            "request": "launch",
+            "mainClass": "edu.escuelaing.arep.networking.httpserver.HttpServer",
+            "projectName": "NetWorking"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch EchoClient",
+            "request": "launch",
+            "mainClass": "edu.escuelaing.arep.networking.EchoClient",
+            "projectName": "NetWorking"
+        },
+        {
+            "type": "java",
+            "name": "Launch EchoServer",
+            "request": "launch",
+            "mainClass": "edu.escuelaing.arep.networking.EchoServer",
+            "projectName": "NetWorking"
+        },
+        {
+            "type": "java",
+            "name": "Launch EchoClient",
+            "request": "launch",
+            "mainClass": "edu.escuelaing.arep.networking.EchoClient",
+            "projectName": "NetWorking"
+        },
+        {
+            "type": "java",
+            "name": "Launch URLExamples",
+            "request": "launch",
+            "mainClass": "edu.escuelaing.arep.networking.URLExamples",
+            "projectName": "NetWorking"
+        },
+        {
+            "type": "java",
+            "name": "Launch WebPageReader",
+            "request": "launch",
+            "mainClass": "edu.escuelaing.arep.networking.WebPageReader",
+            "projectName": "NetWorking"
+        }
+    ]
+}
