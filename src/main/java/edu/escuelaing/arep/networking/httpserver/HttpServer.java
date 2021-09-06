@@ -3,12 +3,17 @@ package edu.escuelaing.arep.networking.httpserver;
 import java.net.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
+/**
+ * Implementacion de un servidor web, este recibe peticiones HTTP y entrega
+ * recursos HTML, JS, CSS e imagenes
+ * @author Angie Medina
+ * @version 3.0 (06/09/21)
+ */
 public class HttpServer {
     public static final Integer PORT = 35000;
     private static final HttpServer _instance = new HttpServer();
@@ -33,14 +38,26 @@ public class HttpServer {
                                             + "Content-Type: image/PNG \r\n"
                                             + "\r\n";
 
+    /**
+     * Gets the current instance of the server
+     * @return the current instance of the server
+     */
     public static HttpServer getInstance(){
         return _instance;
     }
 
+    /**
+     * Class constructor
+     */
     private HttpServer(){
         
     }
 
+    /**
+     * Begin to listen for multiusers requests in the port 35000
+     * @throws IOException If the server is unable to listen for the current port 
+     * @throws URISyntaxException If the formed URI is incorrect
+     */
     public void start() throws IOException, URISyntaxException{
         ServerSocket serverSocket = null;
         try {
@@ -64,14 +81,18 @@ public class HttpServer {
         serverSocket.close();
     }
 
-    public void serverConnection(Socket clientSocket) throws IOException, URISyntaxException {
+    /**
+     * Listen and handle the received requests
+     * @param clientSocket current socket of the server
+     * @throws IOException Any conflict related to the socket
+     */
+    public void serverConnection(Socket clientSocket) throws IOException {
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(
                         clientSocket.getInputStream()));
         String inputLine;
         while ((inputLine = in.readLine()) != null) {
-            //System.out.println("Received from the client: " + inputLine);
             if (inputLine.startsWith("GET")){
                 System.out.println("Received from the client: " + inputLine);
                 manageResource(clientSocket.getOutputStream(), inputLine);
@@ -85,6 +106,11 @@ public class HttpServer {
         clientSocket.close();
     }
 
+    /**
+     * Decide what kind of petion was received and handled according to its Content-Type
+     * @param out the stream the resources need to display on the client
+     * @param input the request
+     */
     public void manageResource(OutputStream out, String input){
         String type = input.split(" ")[1].replace("/", "");
         if(type.length() == 0) type = "index.html";
@@ -98,29 +124,13 @@ public class HttpServer {
         }
     }
 
-    public String welcomePage() {
-        String outputLine = TEXT_MESSAGE_OK.replace("extension", "html");
-        outputLine +=     "<!DOCTYPE html>"
-                        + "<html>"
-                        +       "<head>"
-                        +           "<title>HTTP Server</title>\n"
-                        +           "<meta charset=\"UTF-8\">"
-                        +           "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.8\">"
-                        +       "</head>"
-                        +       "<body>"
-                        +           "<h1>To use the server follow the instructions bellow: </h1>"
-                        +           "<ul>"
-                        +               "<li> To load the html file add to the url '/html'</li>"
-                        +               "<li> To load the img file add to the url '/img'</li>"
-                        +               "<li> To load the javaScript file add to the url '/js'</li>"
-                        +               "<li> To load the css file add to the url '/css'</li>"
-                        +           "</ul>"
-                        +       "</body>"
-                        + "</html>";
-        return outputLine;
-    }
-
-    public void computeTextResponse(OutputStream out, String type, String extension){
+    /**
+     * Read and write on screen the text resorce
+     * @param out the stream the resources need to display on the client
+     * @param type the request
+     * @param extension the resource's extension
+     */
+    private void computeTextResponse(OutputStream out, String type, String extension){
         if (extension.equals("js")) extension = "javascript";
         String content = TEXT_MESSAGE_OK.replace("extension", extension);
         File file = new File("src/main/resources/static/"+type);
@@ -136,7 +146,13 @@ public class HttpServer {
         }
     }
 
-    public void computeImageResponse(OutputStream out, String type, String extension){
+    /**
+     * Read and write on screen the image resorce
+     * @param out the stream the resources need to display on the client
+     * @param type the request
+     * @param extension the resource's extension
+     */
+    private void computeImageResponse(OutputStream out, String type, String extension){
         try{
             BufferedImage image = ImageIO.read(new File("src/main/resources/static/img/"+type));   
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -149,7 +165,12 @@ public class HttpServer {
         }
     }
 
-    public void default404HTMLResponse(OutputStream out){
+
+    /**
+     * Display a simple html page of 404 Error
+     * @param out the stream the resource need to display on the client
+     */
+    private void default404HTMLResponse(OutputStream out){
         String outputline = HTTP_MESSAGE_NOT_FOUND;
         outputline +=     "<!DOCTYPE html>"
                         + "<html>"
