@@ -1,0 +1,25 @@
+:root{
+    --base--color: rgb(250, 211, 161);
+    --foreground--color: rgb(252,237, 218);
+}
+
+body{
+    margin: 20px 30%;
+}
+
+.container{
+    text-align: center;
+    width: auto;
+    border-radius: 10px;
+    background-color: rgb(250, 211, 161);
+}
+
+h2{
+    padding-top: 5%;
+}
+
+img{
+    padding-top: 10px;
+    width: 40%;
+    padding-bottom: 5%;
+}

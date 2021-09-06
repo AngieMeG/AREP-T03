@@ -29,7 +29,6 @@ public class SquareClient {
         String userInput, serverResponse;
         while ((userInput = stdIn.readLine()) != null) {
             try{
-                int inputNumber = Integer.parseInt(userInput);
                 out.println(userInput);
                 serverResponse = in.readLine();
                 System.out.println("echo: " + serverResponse);
