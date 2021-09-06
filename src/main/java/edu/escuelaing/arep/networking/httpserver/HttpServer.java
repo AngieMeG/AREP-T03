@@ -15,7 +15,6 @@ import javax.imageio.ImageIO;
  * @version 3.0 (06/09/21)
  */
 public class HttpServer {
-    public static final Integer PORT = 35000;
     private static final HttpServer _instance = new HttpServer();
     private static final HashMap<String, String> extensionHeaders = new HashMap<String, String>(){{
         put("html", "text");
@@ -60,10 +59,11 @@ public class HttpServer {
      */
     public void start() throws IOException, URISyntaxException{
         ServerSocket serverSocket = null;
+        int port = getPort();
         try {
-            serverSocket = new ServerSocket(PORT);
+            serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            System.err.println("Could not listen on port: " + PORT + ".");
+            System.err.println("Could not listen on port: " + port + ".");
             System.exit(1);
         }
         boolean running = true;
@@ -189,6 +189,21 @@ public class HttpServer {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This method reads the default port as specified by the PORT variable in
+     * the environment.
+     *
+     * Heroku provides the port automatically so you need this to run the
+     * project on Heroku.
+     */
+    static int getPort() {
+        if (System.getenv("PORT") != null) {
+            return Integer.parseInt(System.getenv("PORT"));
+        }
+        return 35000; //returns default port if heroku-port isn't set (i.e. on localhost)
+    }
+
     public static void main(String[] args) throws IOException {
         try {
             HttpServer.getInstance().start();
