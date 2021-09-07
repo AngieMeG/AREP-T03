@@ -12,20 +12,26 @@
         <title>HTTP Server</title>
     </head>
     <body>
-        <h1> TEST THE SERVER HERE</h1>
-        <p>Type here the resource you want to display</p>
-        <input list="options" class="inputField">
-        <datalist id="options">
-            <option value="index.html"></option>
-            <option value="page.html"></option>
-            <option value="script.js"></option>
-            <option value="scriptPage.js"></option>
-            <option value="styles.css"></option>
-            <option value="stylesPage.css"></option>
-            <option value="Eevee.png"></option>
-        </datalist>
-        <button id="submit">Sent it</button>
-        <p><strong>Side Note: </strong> To go back from the resources just erase the last part of the URL until the last / inclusive</p>
+        <div class="container">
+            <div class="card">
+                <h1> <span class="dot"></span> TEST THE SERVER HERE <span class="dot"></span></h1>
+                <p>Type here the resource you want to display</p>
+                <div class="info-wrapper">
+                    <input list="options" class="inputField">
+                    <datalist id="options">
+                        <option value="index.html"></option>
+                        <option value="page.html"></option>
+                        <option value="script.js"></option>
+                        <option value="scriptPage.js"></option>
+                        <option value="styles.css"></option>
+                        <option value="stylesPage.css"></option>
+                        <option value="Eevee.png"></option>
+                    </datalist>
+                    <button id="submit">Sent it</button>
+                </div>
+                <p><strong>Side Note: </strong> To go back from the resources just erase the last part of the URL until the last / inclusive</p>
+            </div>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="script.js"></script>
     </body>
