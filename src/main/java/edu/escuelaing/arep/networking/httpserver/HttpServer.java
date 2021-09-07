@@ -137,7 +137,7 @@ public class HttpServer {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
-            while((line =  br.readLine()) != null) content += line; 
+            while((line =  br.readLine()) != null) content += line + "\n"; 
             br.close();
             out.write(content.getBytes());
         } catch (IOException e) {
