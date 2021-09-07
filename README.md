@@ -35,7 +35,7 @@ Para el correcto funcionamiento en un ambiente de desarrollo se deberán tener i
         ```
         java $JAVA_OPTS -cp target/classes:target/dependency/* edu.escuelaing.arep.networking.httpserver.HttpServer
         ```
-4. **Servicio Web**
+4. **Servicio Web**  
 Para observar la pagina web se debera escribir la siguiente URL en el browser de preferencia
     ```
     http://localhost:35000
@@ -51,7 +51,8 @@ mvn test
 
 
 ## Informe de Arquitectura 🔨 
-
+![](./img/Arquitectura.PNG)
+![](./img/Arquitectura2.PNG)
 
 ## Ejecución
 Se ha construido un sitio web con javascript para probar el servidor.
