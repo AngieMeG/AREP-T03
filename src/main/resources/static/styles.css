@@ -10,26 +10,30 @@
 
 body{
     background-color: var(--background--color);
-    font-size: 100%;
+    font-size: 150%;
     align-items: center;
     color: var(--border--color);
     display: flex;
     flex-direction: column;
 }
 
-.container{
-    position: relative;
-}
-
 .container .card{
+
     background: var(--base--color);
     text-align: center;
-    width: 430px;
-    height: 300px;
     border-style: solid;
     border-width: 2px;
     border-color: var(--border--color);
     overflow: hidden;
+}
+
+.center{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .dot{
@@ -40,7 +44,7 @@ body{
     background-color: var(--border--color);
     border-radius: 50%;
     display: inline-block;
-    transform: translateY(-5px);
+    transform: translateY(-10px);
 }
 
 .info-wrapper {
@@ -50,7 +54,9 @@ body{
 }
 
 input{
-    font-size: 20px;
+    font-size: 90%;
+    text-align: center;
+    width: 40%;
     background-color: transparent;
     outline: none;
     border-style: none;
@@ -58,6 +64,7 @@ input{
 }
 
 button{
+    font-size: 90%;
     background-color: transparent;
     border-style: solid;
     border-color: var(--border-color);
@@ -66,4 +73,12 @@ button{
     padding: 0.3em 1.4em 0.4em 1.3em;
     margin: 0.4em 0 1.5em 0;
     width:30%;
+}
+
+button:active{
+    transform: translateY(4px);
+}
+
+p{
+    margin: 0em 1em 1em 1em ;
 }
