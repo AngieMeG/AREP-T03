@@ -178,9 +178,14 @@ public class HttpServer {
                         +           "<title>404 Not Found</title>\n"
                         +           "<meta charset=\"UTF-8\">"
                         +           "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.8\">"
+                        +           "<style type='text/css'>"
+                        +               "h1{"
+                        +                   "font-size: 150px;"
+                        +                   "text-align: center;"
+                        +           "</style>"
                         +       "</head>"
                         +       "<body>"
-                        +           "<div>Error 404</div>"
+                        +           "<h1> Error 404 </h1>"
                         +       "</body>"
                         + "</html>";
         try {
