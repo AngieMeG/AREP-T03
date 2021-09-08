@@ -51,8 +51,7 @@ mvn test
 
 
 ## Informe de Arquitectura 🔨 
-![](./img/Arquitectura.PNG)
-![](./img/Arquitectura2.PNG)
+La información sobre la arquitectura se encuentra en el siguiente [paper](Arep_T02.pdf)
 
 ## Ejecución
 Se ha construido un sitio web con javascript para probar el servidor.
