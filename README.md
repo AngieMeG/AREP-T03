@@ -25,16 +25,24 @@ Para el correcto funcionamiento en un ambiente de desarrollo se deberán tener i
 3. **Ejecutar la aplicación**  
     * Para entornos Windows
         ```
-        java -cp "target/classes;target/dependency/*" edu.escuelaing.arep.networking.httpserver.HttpServer
+        java -cp "target/classes;target/dependency/*" edu.escuelaing.arep.networking.webapp.AppStarter
         ``` 
     * Para entornos Unix
         ```
-        java $JAVA_OPTS -cp target/classes:target/dependency/* edu.escuelaing.arep.networking.httpserver.HttpServer
+        java $JAVA_OPTS -cp target/classes:target/dependency/* edu.escuelaing.arep.networking.webapp.AppStarter
         ```
 4. **Servicio Web**  
 Para observar la pagina web se debera escribir la siguiente URL en el browser de preferencia
     ```
     http://localhost:35000
+    ```
+Adicional, la parte del framework se accesa como:
+    ```
+    http://localhost:35000/appuser/
+    ```
+Y se adiciona el componente al que se quiere acceder seguido del metodo a correr, un ejemplo es:
+    ```
+    http://localhost:35000/appuser/Math/cubo
     ```
 ## Ejecutando las pruebas ⚙️
 
@@ -46,28 +54,35 @@ mvn test
 ![](./img/pruebasCompilacion.png)
 
 
+## Extensibilidad 📁
+Para poder agregar clases y metodos de manera que sean visibles para el framework se debera para cada uno:  
+* Clases: Se deberá crear la clase en la carpeta webapp con la anotación *Component*
+* Metodos: Se deberá crear el metodo en una clase con las condiciones descritas arriba, con la anotación *Service("/")* junto con el nombre que se quiere utilizar para acceder al metodo desde la URL. Adicional este metodo debera ser estatico
+
+Para ejemplificar lo antes dicho, un ejemplo seria:  
+
+    
+    package edu.escuelaing.arep.networking.webapp;
+    @Component
+    public class Name {
+        @Service("/something")
+        public static String methodName(){
+            return "Something";
+        }
+    }
+    
+
 ## Informe de Arquitectura 🔨 
-La información sobre la arquitectura se encuentra en el siguiente [paper](Arep_T02.pdf)
+La información sobre la arquitectura se encuentra en el siguiente [paper](Arep_T03.pdf)
 
 ## Ejecución
-Se ha construido un sitio web con javascript para probar el servidor.
-Se pueden hacer consultas escribiendo en el espacio provisto por el servidor o simplemente agregando *"/nombre y extension del recurso"*
-* Al ingresar a la URL lo primero que nos encontraremos sera
-![](./img/ServidorWeb.png)
-* El mismo input muestra algunas de las opciones a probar
-![](img/ServidorWeb2.png)
-* Si se quiere ingresar por ejemplo a un recurso estatico HTML
-![](img/Page.png)
-* Como se puede observar este recurso cuenta con su propia hoja de estilos y css, por lo que si le damos click en el boton
-![](img/Page2.png)
-* Para el ejemplo del recurso JavaScript
-![](img/Script.png)
-* El archivo css
-![](img/Css.png)
-* Alguna imagen
-![](img/Image.png)
-* Y por ultimo si se quiere consultar un recurso estatico no disponible
-![](img/Error.png)
+Para información sobre la primera parte de los requerimientos (el servidor web que sea responsivo a solicitudes html e imagenes) dirijase al siguiente [repositorio](https://github.com/AngieMeG/AREP-T02).  
+
+Para probar la implementacion del framework se le agrega a la URL base *http://localhost:35000/* appuser junto con el nombre de la clase y el metodo que se quiere ejecutar. Ejemplificando quedaria algo asi:
+```
+http://localhost:35000/appuser/Math/cubo
+```
+
 
 
 ## Despliegue 📦

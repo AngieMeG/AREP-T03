@@ -166,15 +166,31 @@ public class HttpServer {
     }
 
     public void getComponentResource(OutputStream out, URI input){
+        String action = input.getPath().toString().replaceAll("/appuser/", "");
+        String className = action.substring(0, action.indexOf("/"));
+        String method = action.substring(action.indexOf("/"));
         String content = TEXT_MESSAGE_OK.replace("extension", "html");
+        content +=     "<!DOCTYPE html>"
+                        + "<html>"
+                        +       "<head>"
+                        +           "<title>" + className +"</title>\n"
+                        +           "<meta charset=\"UTF-8\">"
+                        +           "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.8\">"
+                        +           "<style type='text/css'>"
+                        +               "h1{"
+                        +                   "font-size: 150px;"
+                        +                   "text-align: center;"
+                        +           "</style>"
+                        +       "</head>"
+                        +       "<body>"
+                        +           "<h1> %s </h1>"
+                        +       "</body>"
+                        + "</html>";
         try {
-            String action = input.getPath().toString().replaceAll("/appuser/", "");
-            String className = action.substring(0, action.indexOf("/"));
-            String method = action.substring(action.indexOf("/"));
             Class component = Class.forName(ROOT_PATH + className);
             if (isComponent(component)) {
                 loadServices(component);
-                content += executeService(component, method);
+                content = String.format(content, executeService(component, method));
                 out.write(content.getBytes());
             } else{
                 default404HTMLResponse(out);    
