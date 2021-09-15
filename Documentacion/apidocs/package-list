@@ -1,3 +1,5 @@
 edu.escuelaing.arep.networking.httpserver
 edu.escuelaing.arep.networking.network
 edu.escuelaing.arep.networking.sockets
+edu.escuelaing.arep.networking.springplus
+edu.escuelaing.arep.networking.webapp

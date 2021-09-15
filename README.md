@@ -4,7 +4,6 @@ Para este taller se construyó un servidor Web (tipo Apache) en Java. El servido
 
 A continuación se presentarán series de instrucciones para que se pueda tener un funcionamiento en maquina local del proyecto
 
-
 ### Pre-requisitos 📋
 
 Para el correcto funcionamiento en un ambiente de desarrollo se deberán tener instaladas las siguientes tecnologías:  
@@ -72,9 +71,6 @@ Para ejemplificar lo antes dicho, un ejemplo seria:
     }
     
 
-## Informe de Arquitectura 🔨 
-La información sobre la arquitectura se encuentra en el siguiente [paper](Arep_T03.pdf)
-
 ## Ejecución
 Para información sobre la primera parte de los requerimientos (el servidor web que sea responsivo a solicitudes html e imagenes) dirijase al siguiente [repositorio](https://github.com/AngieMeG/AREP-T02).  
 
@@ -82,10 +78,17 @@ Para probar la implementacion del framework se le agrega a la URL base *http://l
 ```
 https://arep-framework.herokuapp.com/appuser/Math/cubo
 ```
-
-
-
-
+A continuación se muestran algunas pruebas:
+* Metodo cubo de la clase Math  
+![](./img/PruebaMath.PNG)
+* Metodo greetings de la clase Text  
+![](./img/PruebaText.PNG)
+* Metodo de una clase que no es servicio  
+![](./img/PruebaError3.PNG)
+* Metodo inexistente de la clase Math  
+![](./img/PruebaError1.PNG)
+* Clase y metodos no existentes  
+![](./img/PruebaError2.PNG)
 
 ## Despliegue 📦
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://arep-framework.herokuapp.com/)
@@ -96,6 +99,7 @@ El despliegue de la aplicación se encuentra en [Spring-Framework](https://arep-
 * [Maven](https://maven.apache.org/) - Manejador de dependencias
 * [JQuery](https://jquery.com/) - Libreria JavaScript para el manejo del DOM
 * [JUnit](https://junit.org/junit5/) - Herramienta para pruebas unitarias en Java
+* [Heroku](https://dashboard.heroku.com/) - Plataforma utilizada para el despliegue de la aplicación
 
 ## Documentación 📖
 Para generar la documentación

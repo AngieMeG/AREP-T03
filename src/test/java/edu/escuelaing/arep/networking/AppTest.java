@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -16,6 +17,7 @@ import java.net.URLConnection;
  */
 public class AppTest{
     private static final String URL_STRING = "https://http-server-arep.herokuapp.com";
+    private static final String URL_STRING_FRAMEWORK = "https://arep-framework.herokuapp.com/appuser";
 
     /**
      * Test if the url is been deployed by heroku
@@ -109,6 +111,63 @@ public class AppTest{
             String type = u.getHeaderField("Content-Type");
             Assert.assertEquals("image/PNG", type);
 
+        } catch(IOException e) {
+            fail("Resource: " + URL_STRING + " was not found.");
+        }
+    }
+
+    /**
+     * Test that the method is load correctly by the page
+     */
+    @Test
+    public void shouldLoadMethod(){
+        String clase = "/Math";
+        String method = "/cubo";
+        try{
+            URL url = new URL(URL_STRING_FRAMEWORK + clase + method);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            int code = connection.getResponseCode();
+            Assert.assertEquals(200, code);
+        } catch(IOException e) {
+            fail("Resource: " + URL_STRING + " was not found.");
+        }
+    }
+
+    /**
+     * Test that the method is not load by the page
+     */
+    @Test
+    public void shouldntLoadMethod(){
+        String clase = "/Math";
+        String method = "/doble";
+        try{
+            URL url = new URL(URL_STRING_FRAMEWORK + clase + method);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            int code = connection.getResponseCode();
+            Assert.assertEquals(404, code);
+        } catch(IOException e) {
+            fail("Resource: " + URL_STRING + " was not found.");
+        }
+    }
+
+    /**
+     * Test that the class is not load by the page
+     */
+    @Test
+    public void shouldntLoadClass(){
+        String clase = "/Maths";
+        String method = "/cubo";
+        try{
+            URL url = new URL(URL_STRING_FRAMEWORK + clase + method);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            int code = connection.getResponseCode();
+            Assert.assertEquals(404, code);
         } catch(IOException e) {
             fail("Resource: " + URL_STRING + " was not found.");
         }

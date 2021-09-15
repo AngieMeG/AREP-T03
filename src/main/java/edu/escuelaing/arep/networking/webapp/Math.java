@@ -15,4 +15,8 @@ public class Math {
     public static Double cubo(){
         return 2.0 * 2.0 * 2.0;
     }
+
+    public static Double doble(){
+        return 2 * 2.0;
+    }
 }

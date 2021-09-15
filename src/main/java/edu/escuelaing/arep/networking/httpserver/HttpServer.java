@@ -14,10 +14,10 @@ import edu.escuelaing.arep.networking.springplus.Component;
 import edu.escuelaing.arep.networking.springplus.Service;
 
 /**
- * Implementacion de un servidor web, este recibe peticiones HTTP y entrega
- * recursos HTML, JS, CSS e imagenes
+ * Web Server implementation, recieve HTTP requests and reponse HTML, JS, CSS and images resources
+ * In addition this class has a simple implementation of a spring framework
  * @author Angie Medina
- * @version 3.0 (06/09/21)
+ * @version 4.0 (14/09/21)
  */
 public class HttpServer {
     private static final HttpServer _instance = new HttpServer();
@@ -137,12 +137,12 @@ public class HttpServer {
     }
 
     /**
-     * 
-     * @param c
-     * @param uri
-     * @param out
-     * @return
-     * @throws HttpServerException
+     * Executes one service previously load in a structure
+     * @param c the class that the method belongs
+     * @param uri the method to execute
+     * @param out the stream the resources need to display on the client
+     * @return the output of the executed method
+     * @throws HttpServerException if an IllegalAccessException, IllegalArgumentException, InvocationTargetException or NullPointerException occurs
      */
     private String executeService(Class c, String uri, OutputStream out) throws HttpServerException{
         String content = "";
@@ -177,9 +177,9 @@ public class HttpServer {
     }
 
     /**
-     * 
-     * @param out
-     * @param input
+     * Get the output of a specific method of a class
+     * @param out the stream the resources need to display on the client
+     * @param input URI that contains /appuser followed by the class name and a method in that class
      */
     public void getComponentResource(OutputStream out, URI input){
         String action = input.getPath().toString().replaceAll("/appuser/", "");
@@ -217,9 +217,9 @@ public class HttpServer {
     }
 
     /**
-     * 
-     * @param component
-     * @return
+     * Checks if a given class is marked as a component
+     * @param component, the current class to check
+     * @return true if the class is marked as a acomponent and false otherwise
      */
     private boolean isComponent(Class component) {
         boolean isComponent = false;
