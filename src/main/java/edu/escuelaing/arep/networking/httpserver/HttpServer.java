@@ -75,7 +75,6 @@ public class HttpServer {
             System.err.println("Could not listen on port: " + port + ".");
             System.exit(1);
         }
-        //searchForComponents();
         boolean running = true;
         while(running){
             Socket clientSocket = null;
@@ -124,6 +123,10 @@ public class HttpServer {
     }
 
 
+    /**
+     * Load the services of a class in structure
+     * @param c, the class to search the methods
+     */
     private void loadServices(Class c){
         for(Method m : c.getDeclaredMethods()){
             if(m.isAnnotationPresent(Service.class)){
@@ -133,12 +136,20 @@ public class HttpServer {
         }
     }
 
-    private String executeService(Class c, String uri){
+    /**
+     * 
+     * @param c
+     * @param uri
+     * @param out
+     * @return
+     * @throws HttpServerException
+     */
+    private String executeService(Class c, String uri, OutputStream out) throws HttpServerException{
         String content = "";
         try{
             content = services.get(c.getName() + "." + uri).invoke(null).toString();
-        } catch (IllegalAccessException | IllegalArgumentException |InvocationTargetException ex) {
-            Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException | IllegalArgumentException |InvocationTargetException | NullPointerException ex) {
+            throw new HttpServerException(ex.getMessage());
         }
         return content;
     }
@@ -165,6 +176,11 @@ public class HttpServer {
         }
     }
 
+    /**
+     * 
+     * @param out
+     * @param input
+     */
     public void getComponentResource(OutputStream out, URI input){
         String action = input.getPath().toString().replaceAll("/appuser/", "");
         String className = action.substring(0, action.indexOf("/"));
@@ -190,17 +206,21 @@ public class HttpServer {
             Class component = Class.forName(ROOT_PATH + className);
             if (isComponent(component)) {
                 loadServices(component);
-                content = String.format(content, executeService(component, method));
+                content = String.format(content, executeService(component, method, out));
                 out.write(content.getBytes());
             } else{
                 default404HTMLResponse(out);    
             }
-        } catch (ClassNotFoundException | IOException | IllegalArgumentException e) {
-            Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, e);
+        } catch (ClassNotFoundException | IOException | IllegalArgumentException | HttpServerException e) {
             default404HTMLResponse(out);
         } 
     }
 
+    /**
+     * 
+     * @param component
+     * @return
+     */
     private boolean isComponent(Class component) {
         boolean isComponent = false;
         if (component.isAnnotationPresent(Component.class)) {

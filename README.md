@@ -78,16 +78,18 @@ La información sobre la arquitectura se encuentra en el siguiente [paper](Arep_
 ## Ejecución
 Para información sobre la primera parte de los requerimientos (el servidor web que sea responsivo a solicitudes html e imagenes) dirijase al siguiente [repositorio](https://github.com/AngieMeG/AREP-T02).  
 
-Para probar la implementacion del framework se le agrega a la URL base *http://localhost:35000/* appuser junto con el nombre de la clase y el metodo que se quiere ejecutar. Ejemplificando quedaria algo asi:
+Para probar la implementacion del framework se le agrega a la URL base *http://localhost:35000/* o *https://arep-framework.herokuapp.com/* appuser junto con el nombre de la clase y el metodo que se quiere ejecutar separados por el caracter especial */*. Ejemplificando quedaria algo asi:
 ```
-http://localhost:35000/appuser/Math/cubo
+https://arep-framework.herokuapp.com/appuser/Math/cubo
 ```
+
+
 
 
 
 ## Despliegue 📦
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://http-server-arep.herokuapp.com/)
-El despliegue de la aplicación se encuentra en [HTTP-SERVER](https://http-server-arep.herokuapp.com/)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://arep-framework.herokuapp.com/)
+El despliegue de la aplicación se encuentra en [Spring-Framework](https://arep-framework.herokuapp.com/)
 
 ## Construido con 🛠️
 
