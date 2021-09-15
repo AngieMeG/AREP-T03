@@ -1,9 +1,5 @@
-﻿# TALLER CLIENTES Y SERVICIOS
-El presente laboratorio proponia varios ejercicios y un reto que ayudan a explorar y familiarizarse con el diseño cliente-servidor.
-
-La parte principal en la que se basa el laboratorio se trata de escribir un servidor web que soporte múlltiples solicitudes seguidas (no concurrentes). El servidor retorna todos los archivos solicitados, incluyendo páginas html, archivos JavaScript, CSS e imágenes. Para la implementacion NO se uso frameworks web como Spark o Spring.
-
-Se implementaron los ejercicios en las carpetas network y sockets.
+﻿# TALLER DE ARQUITECTURAS DE SERVIDORES DE APLICACIONES, META PROTOCOLOS DE OBJETOS, PATRÓN IOC, REFLEXIÓN
+Para este taller se construyó un servidor Web (tipo Apache) en Java. El servidor es capaz de entregar páginas html e imágenes tipo PNG. Igualmente el servidor provee un framework IoC para la construcción de aplicaciones web a partir de POJOS.
 ## Comenzando 🚀
 
 A continuación se presentarán series de instrucciones para que se pueda tener un funcionamiento en maquina local del proyecto
@@ -20,7 +16,7 @@ Para el correcto funcionamiento en un ambiente de desarrollo se deberán tener i
 
 1. **Clonar el proyecto**
     ```
-    git clone https://github.com/AngieMeG/AREP-T02
+    git clone https://github.com/AngieMeG/AREP-T03
     ```
 2. **Compilar el proyecto**
     ```

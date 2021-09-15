@@ -3,10 +3,15 @@ package edu.escuelaing.arep.networking.httpserver;
 import java.net.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+
+import edu.escuelaing.arep.networking.springplus.Component;
+import edu.escuelaing.arep.networking.springplus.Service;
 
 /**
  * Implementacion de un servidor web, este recibe peticiones HTTP y entrega
@@ -37,6 +42,10 @@ public class HttpServer {
                                             + "Content-Type: image/PNG \r\n"
                                             + "\r\n";
 
+    private HashMap<String, Method> services =  new HashMap<>();
+
+    private static final String ROOT_PATH = "edu.escuelaing.arep.networking.webapp.";
+
     /**
      * Gets the current instance of the server
      * @return the current instance of the server
@@ -66,6 +75,7 @@ public class HttpServer {
             System.err.println("Could not listen on port: " + port + ".");
             System.exit(1);
         }
+        //searchForComponents();
         boolean running = true;
         while(running){
             Socket clientSocket = null;
@@ -95,7 +105,14 @@ public class HttpServer {
         while ((inputLine = in.readLine()) != null) {
             if (inputLine.startsWith("GET")){
                 System.out.println("Received from the client: " + inputLine);
-                manageResource(clientSocket.getOutputStream(), inputLine);
+                URI resourceURI;
+                try {
+                    resourceURI = new URI(inputLine.split("\\s")[1]);
+                    manageResource(clientSocket.getOutputStream(), resourceURI);
+                } catch (URISyntaxException e) {
+                    System.out.println(e.getMessage());
+                    default404HTMLResponse(clientSocket.getOutputStream());
+                }
             }
             if (!in.ready()) {
                 break;
@@ -106,22 +123,74 @@ public class HttpServer {
         clientSocket.close();
     }
 
+
+    private void loadServices(Class c){
+        for(Method m : c.getDeclaredMethods()){
+            if(m.isAnnotationPresent(Service.class)){
+                Service service = m.getAnnotation(Service.class);
+                services.put(c.getName() + "." + service.value(), m);
+            }
+        }
+    }
+
+    private String executeService(Class c, String uri){
+        String content = "";
+        try{
+            content = services.get(c.getName() + "." + uri).invoke(null).toString();
+        } catch (IllegalAccessException | IllegalArgumentException |InvocationTargetException ex) {
+            Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return content;
+    }
+
     /**
      * Decide what kind of petion was received and handled according to its Content-Type
      * @param out the stream the resources need to display on the client
      * @param input the request
      */
-    public void manageResource(OutputStream out, String input){
-        String type = input.split(" ")[1].replace("/", "");
-        if(type.length() == 0) type = "index.html";
-        String fileExtension = type.substring(type.lastIndexOf(".") + 1);
-        if(extensionHeaders.containsKey(fileExtension)){
-            if(extensionHeaders.get(fileExtension).equals("text")){
-                computeTextResponse(out, type, fileExtension);
-            }else{
-                computeImageResponse(out, type, fileExtension);
+    public void manageResource(OutputStream out, URI input){
+        if(input.toString().startsWith("/appuser")){
+            getComponentResource(out, input);
+        } else{
+            String type = input.toString().replace("/", "");
+            if(type.length() == 0) type = "index.html";
+            String fileExtension = type.substring(type.lastIndexOf(".") + 1);
+            if(extensionHeaders.containsKey(fileExtension)){
+                if(extensionHeaders.get(fileExtension).equals("text")){
+                    computeTextResponse(out, type, fileExtension);
+                }else{
+                    computeImageResponse(out, type, fileExtension);
+                }
             }
         }
+    }
+
+    public void getComponentResource(OutputStream out, URI input){
+        String content = TEXT_MESSAGE_OK.replace("extension", "html");
+        try {
+            String action = input.getPath().toString().replaceAll("/appuser/", "");
+            String className = action.substring(0, action.indexOf("/"));
+            String method = action.substring(action.indexOf("/"));
+            Class component = Class.forName(ROOT_PATH + className);
+            if (isComponent(component)) {
+                loadServices(component);
+                content += executeService(component, method);
+                out.write(content.getBytes());
+            } else{
+                default404HTMLResponse(out);    
+            }
+        } catch (ClassNotFoundException | IOException | IllegalArgumentException e) {
+            Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, e);
+            default404HTMLResponse(out);
+        } 
+    }
+
+    private boolean isComponent(Class component) {
+        boolean isComponent = false;
+        if (component.isAnnotationPresent(Component.class)) {
+            isComponent = true;
+        }
+        return isComponent;
     }
 
     /**
